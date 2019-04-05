@@ -1,0 +1,17 @@
+apply plugin: 'groovy'
+
+ext {
+    bintrayName = 'custom_gradle_plugin'
+    artifact = bintrayName
+    libraryVersion = custom_gradle_plugin_version
+}
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation 'com.android.tools.build:gradle:3.1.0'
+}
+repositories {
+    mavenCentral()
+}
+apply from:'../PushToLoaclMaven.gradle'

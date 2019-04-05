@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/start_aidl_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开 启 AIDL 服 务"
+        android:textColor="@color/colorPrimary" />
+
+    <Button
+        android:id="@+id/add_data_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添 加 数 据"
+        android:textColor="@color/colorPrimary" />
+
+    <Button
+        android:id="@+id/get_data_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="获 取 数 据"
+        android:textColor="@color/colorPrimary" />
+
+    <Button
+        android:id="@+id/remove_data_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="删 除 数 据"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/result_aidl_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="显示结果"
+        android:textColor="@color/colorAccent" />
+</LinearLayout>

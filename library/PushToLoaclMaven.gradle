@@ -1,0 +1,13 @@
+// backup of [https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle]
+apply plugin: 'maven'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: siteUrl){}
+            //设置插件的GAV参数
+            pom.groupId = publishedGroupId
+            pom.artifactId = artifact
+            pom.version = libraryVersion
+        }
+    }
+}
