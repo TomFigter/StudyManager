@@ -33,9 +33,9 @@ class MainActivity : Activity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         if (v!!.id == start_record_btn.id) {
-            rdSound(tcmFileDir)
+//            rdSound(tcmFileDir)
         } else if (v!!.id == stop_record_btn.id) {
-            rdStop()
+//            rdStop()
 
         }
     }
@@ -64,15 +64,15 @@ class MainActivity : Activity(), View.OnClickListener {
      * which is packaged with this application.
      */
 
-    external fun rdSound(path: String)
-
-    external fun rdStop()
+//    external fun rdSound(path: String)
+//
+//    external fun rdStop()
 
     companion object {
 
         // Used to load the 'native-lib' library on application startup.
         init {
-            System.loadLibrary("native-lib")
+//            System.loadLibrary("native-lib")
         }
     }
 }

@@ -27,4 +27,7 @@
         android:textSize="17sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <com.thtf.leanpackage.view.AnimView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

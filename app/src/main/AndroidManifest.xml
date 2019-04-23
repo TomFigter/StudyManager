@@ -10,16 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.thtf.leanpackage.MainActivity">
+
+        </activity>
+
+
+       <!--简单封装的AsyncTask-->
+        <activity android:name=".async_task_lean.SimpleAsyncTaskActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-       <!--简单封装的AsyncTask-->
-        <activity android:name=".async_task_lean.SimpleAsyncTaskActivity"></activity>
         <!--线程池-->
         <activity android:name=".thread_pool_mode.thread_pool_mode_demo.ThreadActivity"></activity>
         

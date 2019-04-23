@@ -17,11 +17,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
-            cmake {
-                cppFlags "-frtti -fexceptions"
-            }
-        }
+//        externalNativeBuild {
+//            cmake {
+//                cppFlags "-frtti -fexceptions"
+//            }
+//        }
         javaCompileOptions{
             //显示声明支持注解
             annotationProcessorOptions{
@@ -59,11 +59,11 @@ android {
         exclude 'META-INF/BCKEY.DSA'
         exclude 'META-INF/BCKEY.SF'
     }
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-        }
-    }
+//    externalNativeBuild {
+//        cmake {
+//            path "CMakeLists.txt"
+//        }
+//    }
 
     sourceSets {
         main {
