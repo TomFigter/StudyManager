@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.thtf.leanpackage.MineApplication;
 import com.thtf.leanpackage.R;
+import com.thtf.leanpackage.view.SparkView;
 
 /**
  * Created by LiShiChuang on 2018/11/21.
@@ -20,14 +21,16 @@ public class SimpleAsyncTaskActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_async_task_layout);
-        name_txt = (TextView) findViewById(R.id.name_txt);
-        name_txt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        initSimpleAsyncTask();
+//        name_txt = (TextView) findViewById(R.id.name_txt);
+//        name_txt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//        SparkView sparkView = new SparkView(this);
+//        initSimpleAsyncTask();
+//        setContentView(sparkView);
     }
 
     private void initSimpleAsyncTask() {

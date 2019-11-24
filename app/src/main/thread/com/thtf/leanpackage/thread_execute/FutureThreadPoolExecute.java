@@ -1,9 +1,9 @@
 package com.thtf.leanpackage.thread_execute;
 
 
-import com.thtf.leanpackage.thread_pool_mode.FutureCallableThreadPool;
-import com.thtf.leanpackage.thread_pool_mode.FutureRunnableThreadPool;
-import com.thtf.leanpackage.thread_pool_mode.FutureTaskThreadPool;
+import com.thtf.leanpackage.thread_pool_mode.future_thread_pool.FutureCallableThreadPool;
+import com.thtf.leanpackage.thread_pool_mode.future_thread_pool.FutureRunnableThreadPool;
+import com.thtf.leanpackage.thread_pool_mode.future_thread_pool.FutureTaskThreadPool;
 
 /**
  * Created by LiShiChuang on 2018/11/8.

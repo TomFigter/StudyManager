@@ -2,13 +2,12 @@ package com.thtf.leanpackage.common_activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.thtf.leanpackage.R;
 import com.thtf.leanpackage.custom_annotation.ContentView;
-import com.thtf.onceclickapt.OnceInit;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by LiShiChuang on 2018/12/5.

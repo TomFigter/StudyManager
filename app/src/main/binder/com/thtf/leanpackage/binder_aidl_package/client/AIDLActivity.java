@@ -1,5 +1,6 @@
 package com.thtf.leanpackage.binder_aidl_package.client;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Service;
 import android.content.ComponentName;
@@ -68,6 +69,7 @@ public class AIDLActivity extends Activity implements View.OnClickListener {
             handler.sendMessage(msg);
         }
     };
+    @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

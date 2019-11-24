@@ -1,4 +1,4 @@
-package com.thtf.leanpackage.thread_pool_mode;
+package com.thtf.leanpackage.thread_pool_mode.future_thread_pool;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;

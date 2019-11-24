@@ -62,7 +62,6 @@ public class AnimView extends SurfaceView implements SurfaceHolder.Callback {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return;
     }
     class  MyLoop implements Runnable {
 
