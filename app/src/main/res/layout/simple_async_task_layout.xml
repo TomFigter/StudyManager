@@ -1,20 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <com.thtf.leanpackage.spark.SparkSurfaceView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.thtf.leanpackage.custom.MyGiftView
+        android:id="@+id/giftview"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/name_txt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints" />
+
+    <com.thtf.leanpackage.custom.DrawQuadToView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/name_txt" />
+
+    <com.thtf.leanpackage.custom.DrawCubicView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/name_txt"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimaryDark"
         android:gravity="center"
-        android:text="@string/app_name" />
+        android:text="@string/app_name"
+        tools:ignore="MissingConstraints" />
 
-    <com.thtf.leanpackage.view.AnimView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <com.thtf.leanpackage.view.SparkView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>

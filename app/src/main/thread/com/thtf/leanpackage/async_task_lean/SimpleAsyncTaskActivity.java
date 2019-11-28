@@ -7,30 +7,30 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.thtf.leanpackage.MineApplication;
 import com.thtf.leanpackage.R;
-import com.thtf.leanpackage.view.SparkView;
+import com.thtf.leanpackage.custom.MyGiftView;
 
 /**
  * Created by LiShiChuang on 2018/11/21.
  */
 public class SimpleAsyncTaskActivity extends Activity {
     private TextView name_txt;
+    private MyGiftView gifView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_async_task_layout);
-//        name_txt = (TextView) findViewById(R.id.name_txt);
-//        name_txt.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//        SparkView sparkView = new SparkView(this);
+        name_txt = (TextView) findViewById(R.id.name_txt);
+        gifView = findViewById(R.id.giftview);
+
 //        initSimpleAsyncTask();
-//        setContentView(sparkView);
+        name_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gifView.addImageView();
+            }
+        });
     }
 
     private void initSimpleAsyncTask() {
@@ -56,7 +56,7 @@ public class SimpleAsyncTaskActivity extends Activity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 Log.i("SimpleAsyncTask -> ", "onPostExecute");
-                name_txt.setText(s);
+//                name_txt.setText(s);
             }
         }.execute();
     }
@@ -64,6 +64,6 @@ public class SimpleAsyncTaskActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MineApplication.getLeakCanary().watch(this);
+//        MineApplication.getLeakCanary().watch(this);
     }
 }

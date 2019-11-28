@@ -7,6 +7,9 @@ public class BUS_TYPE {
     String name;
     int age;
 
+    public BUS_TYPE() {
+    }
+
     public BUS_TYPE(String name, int age) {
         this.name = name;
         this.age = age;

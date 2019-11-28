@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thtf.leanpackage">
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:name=".MineApplication"
@@ -14,22 +15,24 @@
         <activity android:name="com.thtf.leanpackage.MainActivity">
 
         </activity>
-
-
-       <!--简单封装的AsyncTask-->
-        <activity android:name=".async_task_lean.SimpleAsyncTaskActivity">
+        <!--自定View-->
+        <activity android:name=".base_view.BaseViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--简单封装的AsyncTask-->
+        <activity android:name=".async_task_lean.SimpleAsyncTaskActivity">
+
+        </activity>
         <!--线程池-->
         <activity android:name=".thread_pool_mode.thread_pool_mode_demo.ThreadActivity"></activity>
-        
-        
+
+
         <!--***********************************Binder 通信****************************************-->
-        
+
         <!--自定义AIDL可跨进程通信的Client客户端-->
         <activity android:name=".binder_proxy_package.client.ClientActivity"></activity>
         <!--自定义AIDL可跨进程通信的Server服务端,执行poxy方法-->
@@ -43,7 +46,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
-        
+
         <!--通用AIDL不可跨进程通信Client客户端-->
         <activity android:name=".binder_aidl_package.client.AIDLActivity"></activity>
         <!--通用AIDL不可跨进程通信Server服务端-->
@@ -57,17 +60,17 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
-        
+
         <!--EventBus通信-->
-        <activity android:name=".event_bus_package.EvenBusServerActivity"/>
+        <activity android:name=".event_bus_package.EvenBusServerActivity" />
         <activity android:name=".event_bus_package.EventBusClickActivity">
 
         </activity>
-        
+
         <!--********************************Annotation注解 Click事件封装****************************************-->
-        
+
         <activity android:name=".common_activity.ContentViewAnnotationActivity">
-           
+
         </activity>
     </application>
 
