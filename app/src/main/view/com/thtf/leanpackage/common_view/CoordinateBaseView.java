@@ -2,13 +2,22 @@ package com.thtf.leanpackage.base_view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Picture;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.PictureDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.thtf.leanpackage.R;
 
 import java.util.Random;
 
@@ -26,6 +35,7 @@ public class CoordinateBaseView extends View {
     private Random mRandom = new Random();
     private int centerY;
     private int centerX;
+    private Picture picture;
 
     public CoordinateBaseView(Context context) {
         this(context, null);
@@ -49,6 +59,7 @@ public class CoordinateBaseView extends View {
         paint.setStrokeWidth(3);
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
+        picture = new Picture();
     }
 
     @Override
@@ -65,7 +76,9 @@ public class CoordinateBaseView extends View {
         drawCommon(canvas);
 //        drawSpinSquare(canvas);
 //        drawRotate(canvas, 0, 0);
-        drawCircle(canvas);
+//        drawCircle(canvas);
+//        drawSkew(canvas);
+        drawPicture(canvas);
     }
 
     /**
@@ -79,10 +92,52 @@ public class CoordinateBaseView extends View {
         canvas.drawLine(centerX, 0, centerX, mHeight, paint);
     }
 
+
+    /**
+     * 绘制图片
+     */
+    private void drawPicture() {
+        Canvas canvas = picture.beginRecording(mWidth, mHeight);
+        canvas.translate(centerX, centerY);
+        canvas.drawCircle(0, 0, 100, paint);
+        picture.endRecording();
+    }
+    private void drawPicture(Canvas canvas) {
+        canvas.translate(centerX, centerY);
+        Bitmap bitmap=BitmapFactory.decodeResource(context.getResources(),R.drawable.__leak_canary_icon);
+//        canvas.drawBitmap(bitmap,new Matrix(),paint);
+//        canvas.drawBitmap(bitmap,200,500,paint);
+        Rect src=new Rect(0,0,bitmap.getWidth()/2,bitmap.getHeight()/2);
+        Rect dst=new Rect(100,100,400,400);
+        paint.setColor(randomColor());
+        canvas.drawBitmap(bitmap,src,dst,paint);
+    }
+
+    /**
+     * 图形错切
+     * 已做的动作，都已存在 并会进行叠加
+     *
+     * @param canvas
+     */
+    private void drawSkew(Canvas canvas) {
+        canvas.translate(centerX, centerY);
+        RectF rectF = new RectF(0, 0, 200, 200);
+        paint.setColor(randomColor());
+        canvas.drawRect(rectF, paint);
+        paint.setTextSize(36);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText("完美世界", 100, 100, paint);
+        canvas.skew(1, 0);  //水平错切 45度
+        canvas.skew(0, 1);  //垂直错切 45度
+        paint.setColor(randomColor());
+        canvas.drawRect(rectF, paint);
+    }
+
     /**
      * 螺旋圆
      * scale  --> 按比例缩放
      * rotate --> 旋转角度，可叠加
+     *
      * @param canvas
      */
     private void drawCircle(Canvas canvas) {
