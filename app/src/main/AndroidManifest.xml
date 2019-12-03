@@ -16,7 +16,7 @@
 
         </activity>
         <!--自定View-->
-        <activity android:name=".base_view.BaseViewActivity">
+        <activity android:name=".BaseViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.thtf.leanpackage.base_view;
+package com.thtf.leanpackage.common_view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,13 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.PictureDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -107,9 +104,8 @@ public class CoordinateBaseView extends View {
         Bitmap bitmap=BitmapFactory.decodeResource(context.getResources(),R.drawable.__leak_canary_icon);
 //        canvas.drawBitmap(bitmap,new Matrix(),paint);
 //        canvas.drawBitmap(bitmap,200,500,paint);
-        Rect src=new Rect(0,0,bitmap.getWidth()/2,bitmap.getHeight()/2);
+        Rect src=new Rect(bitmap.getWidth()/4,0,bitmap.getWidth()/2,bitmap.getHeight()/2);
         Rect dst=new Rect(100,100,400,400);
-        paint.setColor(randomColor());
         canvas.drawBitmap(bitmap,src,dst,paint);
     }
 

@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<com.thtf.leanpackage.base_view.CoordinateBaseView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent">
+<com.thtf.leanpackage.common_view.CoordinateBaseView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"/>
+    <com.thtf.leanpackage.common_view.PathBaseView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+    <com.thtf.leanpackage.custom_view.RadarView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>

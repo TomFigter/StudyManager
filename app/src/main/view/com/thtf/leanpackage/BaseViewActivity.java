@@ -1,10 +1,9 @@
-package com.thtf.leanpackage.base_view;
+package com.thtf.leanpackage;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
-import com.thtf.leanpackage.R;
 
 /**
  * @author LiShiChuang
@@ -13,6 +12,7 @@ import com.thtf.leanpackage.R;
  * @描述
  */
 public class BaseViewActivity extends Activity {
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
