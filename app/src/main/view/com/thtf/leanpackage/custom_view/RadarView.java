@@ -1,7 +1,6 @@
 package com.thtf.leanpackage.custom_view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -24,47 +23,38 @@ import java.util.List;
  * @描述
  */
 public class RadarView extends BaseView {
-    private Path mRdPath;
-
-    private int mCornerCount = 5;//角个数
-
-    private int mRingCount = 5; //雷达圆环个数
-    //中心X,Y点坐标
-    private float mCenterX, mCenterY;
-    //半径
-    private float mRadius = 0.0f;
-    //标签文字
-    private List<String> mlables;
-    //每个标签点的百分比
-    private LinkedList<Double> dataSeries;
-    //雷达图每个点的X,Y坐标
-    private float[][] mArrayDotX = null, mArrayDotY = null;
-    //雷达图外围标签文字X,Y坐标
-    private float[][] mArrayLabelX = null, mArrayLabelY = null;
-    //每个圆环半径
-    private Float[] mArrayRadius = null;
-    private Paint mPaintLine;//雷达线画笔
-    private Paint mPaintLabel;//每个点的标签文字画笔
-    private Paint mPaintArea;//阴影区域画笔
-    //每个标签节点归属的圆心角度
-    private Float[] mArrayLabelAgent = null;
     private String TAG = RadarView.class.getSimpleName();
 
+    private Path mRdPath;
+    private float mRadius = 0.0f;//半径
+    private Paint mPaintLine;//雷达线画笔
+    private int mCornerCount = 5;//角个数
+    private Paint mPaintArea;//阴影区域画笔
+    private List<String> mlables;//标签文字
+    private int mRingCount = 5;//雷达圆环个数
+    private Paint mPaintLabel;//每个点的标签文字画笔
+    private float mCenterX, mCenterY;//中心X,Y点坐标
+    private Float[] mArrayRadius = null;//每个圆环半径
+    private LinkedList<Double> dataSeries;//每个标签点的百分比
+    private Float[] mArrayLabelAgent = null;//每个标签节点归属的圆心角度
+    private float[][] mArrayDotX = null, mArrayDotY = null;//雷达图每个点的X,Y坐标
+    private float[][] mArrayLabelX = null, mArrayLabelY = null;//雷达图外围标签文字X,Y坐标
 
     public RadarView(Context context) {
-        this(context, null);
+        super(context);
     }
 
     public RadarView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
     }
 
     public RadarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView();
     }
 
-    private void initView() {
+    @Override
+    protected void init() {
+        super.init();
         mRdPath = new Path();
         mlables = new LinkedList<>();
         mlables.add("数学");
@@ -80,7 +70,7 @@ public class RadarView extends BaseView {
         dataSeries.add(90.0);
         //蜘蛛网和各个轴线的画笔
         mPaintLine = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintLine.setColor(Color.parseColor("#b0c2ff"));
+        mPaintLine.setColor(randomColor());
         mPaintLine.setStyle(Paint.Style.STROKE);
         mPaintLine.setStrokeWidth(2);
         //标签文字画笔
@@ -91,14 +81,19 @@ public class RadarView extends BaseView {
         mPaintLabel.setTextAlign(Paint.Align.CENTER);
         //阴影区域画笔
         mPaintArea = new Paint();
-        mPaintArea.setColor(Color.parseColor("#b0c2ff"));
+        mPaintArea.setColor(randomColor());
         mPaintArea.setAntiAlias(true);
         mPaintArea.setStrokeWidth(5);
         mPaintArea.setAlpha(100);
-
     }
 
-
+    /**
+     * 改变屏幕尺寸
+     * @param width
+     * @param height
+     * @param oldwidth
+     * @param oldheight
+     */
     @Override
     protected void onSizeChanged(int width, int height, int oldwidth, int oldheight) {
         mCenterX = Math.abs(div(width, 2f));
@@ -115,11 +110,11 @@ public class RadarView extends BaseView {
         //绘制蜘蛛网
         renderGridLinesRadar(canvas);
         //绘制圆心到定点的轴线
-//        renderAxisLines(canvas);
+        renderAxisLines(canvas);
 //        画标题
-//        renderAxisLabels(canvas);
+        renderAxisLabels(canvas);
 //        画填充区域
-//        renderDataArea(canvas);
+        renderDataArea(canvas);
     }
 
 
@@ -129,11 +124,11 @@ public class RadarView extends BaseView {
         //扇形每个角的角度, 360/
         float pAngle = div(360f, mCornerCount); //   72f;
         //270为中轴线所处圆心角
-        float initOffsetAgent = sub(270f, pAngle);
-        Log.e(TAG, "圆心角 --> " + initOffsetAgent);
+        float initOffsetAgent = sub(270f, pAngle);  //270f-72f
         //当前圆心角偏移量
         float offsetAgent = 0.0f;
         //初始化雷达图各个点坐标和外围标签文字坐标
+        //dataAxisTickCount=mRingCount + 1;  mRingCount=5;
         mArrayDotX = new float[dataAxisTickCount][mCornerCount];
         mArrayDotY = new float[dataAxisTickCount][mCornerCount];
         mArrayLabelX = new float[dataAxisTickCount][mCornerCount];
@@ -141,24 +136,27 @@ public class RadarView extends BaseView {
         //保存每个环数的半径长度
         mArrayRadius = new Float[dataAxisTickCount];
         //由总环数和半径长度算出平均刻度值
-        float avgRadius = div(mRadius, mRingCount);
+        float avgRadius = div(mRadius, mRingCount); // 平均刻度值 = 半径 / 环数
         mArrayLabelAgent = new Float[mCornerCount];
         float currAgent = 0.0f;
         for (int i = 0; i < mRingCount + 1; i++) //数据轴(从圆心点开始)
         {
             //平均刻度值算出每个圆环的半径
+            //圆环半径 = 平均刻度值 * i
             mArrayRadius[i] = avgRadius * i;
             for (int j = 0; j < mCornerCount; j++) {
+                //270f + 72f * j
                 offsetAgent = add(initOffsetAgent, pAngle * j);
+                //  圆心角偏移量 + 72f
                 currAgent = add(offsetAgent, pAngle);
                 //计算位置
                 if (Float.compare(0.f, mArrayRadius[i]) == 0) {
                     mArrayDotX[i][j] = mCenterX;
                     mArrayDotY[i][j] = mCenterY;
                 } else {
-                    //点的位置
-                    mArrayDotX[i][j] = calcArcEndPointXY(mCenterX, mCenterY, mArrayRadius[i], currAgent).x;
-                    mArrayDotY[i][j] = calcArcEndPointXY(mCenterX, mCenterY, mArrayRadius[i], currAgent).y;
+                    //坐标位置
+                    mArrayDotX[i][j] = calcArcEndPointXY(mCenterX, mCenterY, mArrayRadius[i], currAgent).x; // X 位置
+                    mArrayDotY[i][j] = calcArcEndPointXY(mCenterX, mCenterY, mArrayRadius[i], currAgent).y; // Y 位置
                 }
                 //记下每个标签对应的圆心角
                 if (0 == i) mArrayLabelAgent[j] = currAgent;
@@ -166,8 +164,11 @@ public class RadarView extends BaseView {
         }
     }
 
-
-    //绘制蜘蛛网
+    /**
+     * 绘制蜘蛛网
+     *
+     * @param canvas
+     */
     private void renderGridLinesRadar(Canvas canvas) {
         //重置路径
         mRdPath.reset();
@@ -187,15 +188,18 @@ public class RadarView extends BaseView {
         }
     }
 
-    //绘制各个方向上的轴线
+    /*
+     *绘制各个方向上的轴线
+     */
     private void renderAxisLines(Canvas canvas) {
         for (int j = 0; j < mCornerCount; j++) {
             canvas.drawLine(mCenterX, mCenterY, mArrayDotX[mRingCount][j], mArrayDotY[mRingCount][j], mPaintLine);
         }
     }
 
-
-    //绘制最外围的标签
+    /*
+     *绘制最外围的标签
+     */
     private void renderAxisLabels(Canvas canvas) {
         for (int j = 0; j < mlables.size(); j++) {
             if (mArrayDotX[mRingCount][j] > mCenterX && mArrayDotY[mRingCount][j] < mCenterY) {
@@ -263,58 +267,80 @@ public class RadarView extends BaseView {
     }
 
 
-    //设置标签
+    /*
+     *设置标签
+     */
     public void setLableList(List<String> lableList) {
         this.mlables = lableList;
         postInvalidate();
     }
 
-    //设置百分比
+    /*
+     *设置百分比
+     */
     public void setDataList(LinkedList<Double> dataList) {
         this.dataSeries = dataList;
         postInvalidate();
     }
 
-
-    //依圆心坐标，半径，扇形角度，计算出扇形终射线与圆弧交叉点的xy坐标
+    /**
+     * 依圆心坐标，半径，扇形角度，计算出扇形终射线与圆弧交叉点的xy坐标
+     *
+     * @param cirX     centerX
+     * @param cirY     centerY
+     * @param radius   圆环半径 = 平均刻度值 * i
+     * @param cirAngle 圆心角偏移量 + 72f
+     * @return
+     */
     public PointF calcArcEndPointXY(float cirX, float cirY, float radius, float cirAngle) {
         PointF mPointF = new PointF();
-        if (Float.compare(cirAngle, 0.0f) == 0 || Float.compare(radius, 0.0f) == 0) {
+
+        if (Float.compare(cirAngle, 0.0f) == 0 || Float.compare(radius, 0.0f) == 0) { // 角度 == 0.0f || 半径 == 0.0f
             return mPointF;
         }
+
         //将角度转换为弧度
-        float arcAngle = (float) (Math.PI * div(cirAngle, 180.0f));
-        if (Float.compare(arcAngle, 0.0f) == -1)
+        float arcAngle = (float) (Math.PI * div(cirAngle, 180.0f)); // 弧度 = PI * 角度 / 180.0f
+
+        if (Float.compare(arcAngle, 0.0f) == -1) // 当前角度 < 0.0f
             mPointF.x = mPointF.y = 0.0f;
-        if (Float.compare(cirAngle, 90.0f) == -1) {
-            mPointF.x = add(cirX, (float) Math.cos(arcAngle) * radius);
-            mPointF.y = add(cirY, (float) Math.sin(arcAngle) * radius);
-        } else if (Float.compare(cirAngle, 90.0f) == 0) {
-            mPointF.x = cirX;
-            mPointF.y = add(cirY, radius);
-        } else if (Float.compare(cirAngle, 90.0f) == 1 && Float.compare(cirAngle, 180.0f) == -1) {
-            arcAngle = (float) (Math.PI * (sub(180f, cirAngle)) / 180.0f);
-            mPointF.x = sub(cirX, (float) (Math.cos(arcAngle) * radius));
-            mPointF.y = add(cirY, (float) (Math.sin(arcAngle) * radius));
-        } else if (Float.compare(cirAngle, 180.0f) == 0) {
-            mPointF.x = cirX - radius;
-            mPointF.y = cirY;
-        } else if (Float.compare(cirAngle, 180.0f) == 1 && Float.compare(cirAngle, 270.0f) == -1) {
-            arcAngle = (float) (Math.PI * (sub(cirAngle, 180.0f)) / 180.0f);
-            mPointF.x = sub(cirX, (float) (Math.cos(arcAngle) * radius));
-            mPointF.y = sub(cirY, (float) (Math.sin(arcAngle) * radius));
-        } else if (Float.compare(cirAngle, 270.0f) == 0) {
-            mPointF.x = cirX;
-            mPointF.y = sub(cirY, radius);
-        } else {
-            arcAngle = (float) (Math.PI * (sub(360.0f, cirAngle)) / 180.0f);
-            mPointF.x = add(cirX, (float) (Math.cos(arcAngle) * radius));
-            mPointF.y = sub(cirY, (float) (Math.sin(arcAngle) * radius));
+
+        if (Float.compare(cirAngle, 90.0f) == -1) {  //当前角度 < 90.0f
+            mPointF.x = add(cirX, (float) Math.cos(arcAngle) * radius); // centerX + cos(角度) * 半径
+            mPointF.y = add(cirY, (float) Math.sin(arcAngle) * radius); // centerY + sin(角度) * 半径
+
+        } else if (Float.compare(cirAngle, 90.0f) == 0) { //当前角度 == 90.0f
+            mPointF.x = cirX;  //90.0f的时候 X坐标在圆心 X轴坐标上
+            mPointF.y = add(cirY, radius); // centerY + 半径
+
+        } else if (Float.compare(cirAngle, 90.0f) == 1 && Float.compare(cirAngle, 180.0f) == -1) { // 当前角度 > 90.0f && 当前角度 < 180.0f
+            arcAngle = (float) (Math.PI * (sub(180f, cirAngle)) / 180.0f); // 弧度 = PI * ( 180.0f - 角度 ) /180.0f
+            mPointF.x = sub(cirX, (float) (Math.cos(arcAngle) * radius));  // x = centerX - cos(角度) * 半径
+            mPointF.y = add(cirY, (float) (Math.sin(arcAngle) * radius));  // y = centerY + sin(角度) * 半径
+
+        } else if (Float.compare(cirAngle, 180.0f) == 0) { // 当前角度 == 180.0f
+            mPointF.x = cirX - radius; // centerX - 半径
+            mPointF.y = cirY; // 180.0f的时候 Y坐标在圆心 Y轴坐标上
+
+        } else if (Float.compare(cirAngle, 180.0f) == 1 && Float.compare(cirAngle, 270.0f) == -1) { // 当前角度 > 180.0f && 当前角度 < 270.0f
+            arcAngle = (float) (Math.PI * (sub(cirAngle, 180.0f)) / 180.0f); // 弧度 = PI * ( 角度 - 180.0f ) /180.0f
+            mPointF.x = sub(cirX, (float) (Math.cos(arcAngle) * radius)); // centerX - cos(角度) * 半径
+            mPointF.y = sub(cirY, (float) (Math.sin(arcAngle) * radius)); // centerY - sin(角度) * 半径
+
+        } else if (Float.compare(cirAngle, 270.0f) == 0) { //当前角度 == 270.0f
+            mPointF.x = cirX; // 270.0f的时候 X坐标在圆心 X轴坐标上
+            mPointF.y = sub(cirY, radius); // centerY - 半径
+
+        } else { // 当前角度 > 270.0f && 当前角度 < 360.0f
+            arcAngle = (float) (Math.PI * (sub(360.0f, cirAngle)) / 180.0f); // 弧度 = PI * ( 360.0f - 角度 ) /180.0f
+            mPointF.x = add(cirX, (float) (Math.cos(arcAngle) * radius)); // centerX + cos(角度) * 半径
+            mPointF.y = sub(cirY, (float) (Math.sin(arcAngle) * radius)); // centerY - sin(角度) * 半径
         }
+
         return mPointF;
     }
 
-    /*------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------*/
 
     /**
      * 除法计算
@@ -354,5 +380,5 @@ public class RadarView extends BaseView {
         BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
         return bgNum1.subtract(bgNum2).floatValue();
     }
-    /*------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------*/
 }

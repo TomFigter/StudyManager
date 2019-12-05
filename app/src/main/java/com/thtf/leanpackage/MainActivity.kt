@@ -3,10 +3,12 @@ package com.thtf.leanpackage
 import android.app.Activity
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Switch
 import android.widget.TextView
+import com.alibaba.fastjson.asm.MethodCollector
 
 /**
  * Skeleton of an Android Things activity.
@@ -57,7 +59,9 @@ class MainActivity : Activity(), View.OnClickListener {
 //        tv.text = stringFromJNI()
         start_record_btn.setOnClickListener(this)
         stop_record_btn.setOnClickListener(this)
+
     }
+
 
     /**
      * A native method that is implemented by the 'native-lib' native library,

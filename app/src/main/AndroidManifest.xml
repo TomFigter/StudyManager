@@ -17,6 +17,10 @@
         </activity>
         <!--自定View-->
         <activity android:name=".BaseViewActivity">
+
+        </activity>
+        <!--手势操作Activity-->
+        <activity android:name=".GestureActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

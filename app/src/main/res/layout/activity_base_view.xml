@@ -13,5 +13,14 @@
         android:visibility="gone"/>
     <com.thtf.leanpackage.custom_view.RadarView
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+    <com.thtf.leanpackage.custom_view.BezierView
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent" />
+    <com.thtf.leanpackage.custom_view.MagicCircle
+        android:id="@+id/magic_circle"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>
